@@ -18,9 +18,7 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
-import ca.qc.cstj.android.employus.fragments.DatePickerFragment;
-import ca.qc.cstj.android.employus.helpers.DateParser;
-import ca.qc.cstj.android.employus.models.Employe;
+import ca.qc.cstj.android.tp2_android.helpers.DateParser;
 import ca.qc.cstj.android.tp2_android.models.Film;
 
 

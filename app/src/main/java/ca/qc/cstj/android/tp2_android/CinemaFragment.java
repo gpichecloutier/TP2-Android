@@ -94,9 +94,9 @@ public class CinemaFragment extends Fragment{
 
         private void loadCinemas()
         {
-            //progressDialog = ProgressDialog.show(getActivity(),"","En chargement...",true,false);
+            progressDialog = ProgressDialog.show(getActivity(),"","En chargement...",true,false);
 
-            /*Ion.with(getActivity())
+            Ion.with(getActivity())
                     .load(ServicesURI.CINEMAS_SERVICE_URI)
                     .asJsonArray()
                     .withResponse()
@@ -120,8 +120,6 @@ public class CinemaFragment extends Fragment{
                             progressDialog.dismiss();
                         }
                     });
-            */
-
         }
 
         @Override
@@ -130,7 +128,4 @@ public class CinemaFragment extends Fragment{
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
-
-
-
 }
