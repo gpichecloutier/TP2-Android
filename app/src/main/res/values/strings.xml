@@ -8,5 +8,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
-
+    <string name="titre_film">Titre</string>
+    <string name="pays_film">Pays</string>
+    <string name="genre_film">Genre</string>
+    <string name="classe_film">Classe</string>
+    <string name="réalisateur_film">Réaliser par ________</string>
+    <string name="duree_film">Durée : __ minutes</string>
+    <string name="btnAjouter">Ajouter</string>
 </resources>

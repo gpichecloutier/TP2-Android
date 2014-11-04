@@ -46,6 +46,8 @@ public class MainActivity extends Activity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         //Il faut ajouter un else if ici pour obtenir l'item sélectionné dans le navigation drawer
+
+
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, CinemaFragment.newInstance(position + 1))
