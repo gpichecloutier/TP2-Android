@@ -76,19 +76,19 @@ public class CinemaFragment extends Fragment{
 
             loadCinemas();
 
-            /*lstCinema.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            lstCinema.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                     String href = cinemaAdapter.getItem(position).getHref();
 
-                    FragmentTransaction transaction =  getFragmentManager().beginTransaction();
+                    /*FragmentTransaction transaction =  getFragmentManager().beginTransaction();
                     transaction.replace(R.id.container,DetailCinemaFragment.newInstance(href))
                             .addToBackStack("");
-                    transaction.commit();
+                    transaction.commit();*/
 
                 }
-            });*/
+            });
 
         }
 
@@ -115,6 +115,7 @@ public class CinemaFragment extends Fragment{
                             }
                             else {
                                 // Erreur 404
+
                             }
 
                             progressDialog.dismiss();
