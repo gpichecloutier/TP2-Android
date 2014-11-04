@@ -49,9 +49,22 @@ public class MainActivity extends Activity
 
 
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, CinemaFragment.newInstance(position + 1))
-                .commit();
+
+        switch(position){
+            case 0:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, CinemaFragment.newInstance(position + 1))
+                        .commit();
+                break;
+
+            case 1:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, FilmFragment.newInstance(position + 1))
+                        .commit();
+                break;
+        }
+
+
     }
 
     public void onSectionAttached(int number) {

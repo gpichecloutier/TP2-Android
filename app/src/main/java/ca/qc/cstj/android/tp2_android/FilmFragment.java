@@ -68,7 +68,7 @@ public class FilmFragment extends Fragment{
 
             lstFilm = (ListView) getActivity().findViewById(R.id.list_films);
 
-            loadFilms();
+            //loadFilms();
 
             /*lstCinema.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
