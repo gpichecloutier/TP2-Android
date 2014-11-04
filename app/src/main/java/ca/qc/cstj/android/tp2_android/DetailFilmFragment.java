@@ -18,9 +18,9 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
-import ca.qc.cstj.android.employus.fragments.DatePickerFragment;
-import ca.qc.cstj.android.employus.helpers.DateParser;
-import ca.qc.cstj.android.employus.models.Employe;
+import java.util.Calendar;
+
+import ca.qc.cstj.android.tp2_android.helpers.DateParser;
 import ca.qc.cstj.android.tp2_android.models.Film;
 
 
@@ -53,6 +53,8 @@ public class DetailFilmFragment extends Fragment {
     private Button btnAjouter;
 
     private Film film;
+
+    private ProgressDialog progressDialog;
 
     private OnFragmentInteractionListener mListener;
 
@@ -110,14 +112,19 @@ public class DetailFilmFragment extends Fragment {
 
     private void ajouterCommentaire() {
 
-        /*JsonObject body = new JsonObject();
-        body.addProperty("nom",txtNom.getText().toString());
-        body.addProperty("prenom",txtPrenom.getText().toString());
-        body.addProperty("dateNaissance",txtDateNaissance.getText().toString());
-        body.addProperty("dateEmbauche",txtDateEmbauche.getText().toString());
+        JsonObject body = new JsonObject();
+        // TODO: ID
+        body.addProperty("texte",txtCommentaire.getText().toString());
+        body.addProperty("note",txtNote.getText().toString());
+        body.addProperty("auteur",txtPseudo.getText().toString());
 
-        Ion.with(getActivity())
-                .load("PATCH",href)
+        Calendar c = Calendar.getInstance();
+        int seconds = c.get(Calendar.SECOND);
+
+        body.addProperty("dateHeure", seconds);
+
+        /*Ion.with(getActivity())
+                .load("POST",href)
                 .addHeader("Content-Type","application/json")
                 .setJsonObjectBody(body)
                 .asJsonObject()
@@ -125,17 +132,17 @@ public class DetailFilmFragment extends Fragment {
                     @Override
                     public void onCompleted(Exception e, JsonObject jsonObject) {
                         Toast.makeText(getActivity().getApplicationContext(),
-                                "Enregistrement réussi", Toast.LENGTH_LONG).show();
+                                "Commentaire ajouté!", Toast.LENGTH_LONG).show();
                     }
-                });
-*/
+                });*/
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        /*progressDialog = ProgressDialog.show(getActivity(), "Films", "En chargement...", true, false);
+        progressDialog = ProgressDialog.show(getActivity(), "Films", "En chargement...", true, false);
         Ion.with(getActivity())
                 .load(href)
                 .asJsonObject()
@@ -156,7 +163,7 @@ public class DetailFilmFragment extends Fragment {
 
                     }
 
-                });*/
+                });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
