@@ -15,4 +15,10 @@
     <string name="réalisateur_film">Réaliser par ________</string>
     <string name="duree_film">Durée : __ minutes</string>
     <string name="btnAjouter">Ajouter</string>
+    <string name="commentaires">Commentaires</string>
+    <string name="ajouterUnCommentaire">Ajouter un commentaire</string>
+    <string name="ajouterVotreCommentaire">Ajouter votre commentaire</string>
+    <string name="votrePseudo">Votre pseudo</string>
+    <string name="note">Note</string>
+    <string name="sur10">/10</string>
 </resources>
