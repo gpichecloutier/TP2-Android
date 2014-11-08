@@ -11,11 +11,7 @@
     <ListView
         android:id="@+id/list_cinemas"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Cinéma" />
+        android:layout_height="match_parent">
+    </ListView>
 
 </FrameLayout>

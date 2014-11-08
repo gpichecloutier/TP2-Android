@@ -24,16 +24,11 @@ import org.apache.http.HttpStatus;
 import java.util.ArrayList;
 
 import ca.qc.cstj.android.tp2_android.adapters.CinemaAdapter;
+import ca.qc.cstj.android.tp2_android.adapters.OldCinemaAdapter;
 import ca.qc.cstj.android.tp2_android.models.Cinema;
 import ca.qc.cstj.android.tp2_android.services.ServicesURI;
 
-import java.util.ArrayList;
-
-/**
- * Created by 1247308 on 2014-10-30.
- */
 public class CinemaFragment extends Fragment{
-
 
         /**
          * The fragment argument representing the section number for this
@@ -43,7 +38,7 @@ public class CinemaFragment extends Fragment{
 
         private ListView lstCinema;
         private ProgressDialog progressDialog;
-        private CinemaAdapter cinemaAdapter;
+        private OldCinemaAdapter cinemaAdapter;
 
 
         /**
@@ -76,19 +71,19 @@ public class CinemaFragment extends Fragment{
 
             loadCinemas();
 
-            lstCinema.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /*lstCinema.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                     String href = cinemaAdapter.getItem(position).getHref();
 
-                    /*FragmentTransaction transaction =  getFragmentManager().beginTransaction();
+                    FragmentTransaction transaction =  getFragmentManager().beginTransaction();
                     transaction.replace(R.id.container,DetailCinemaFragment.newInstance(href))
                             .addToBackStack("");
-                    transaction.commit();*/
+                    transaction.commit();
 
                 }
-            });
+            });*/
 
         }
 
@@ -99,24 +94,13 @@ public class CinemaFragment extends Fragment{
             Ion.with(getActivity())
                     .load(ServicesURI.CINEMAS_SERVICE_URI)
                     .asJsonArray()
-                    .withResponse()
-                    .setCallback(new FutureCallback<Response<JsonArray>>() {
+                    .setCallback(new FutureCallback<JsonArray>() {
                         @Override
-                        public void onCompleted(Exception e, Response<JsonArray> jsonArrayResponse) {
+                        public void onCompleted(Exception e, JsonArray jsonArray) {
 
-                            if(jsonArrayResponse.getHeaders().getResponseCode() == HttpStatus.SC_OK) {
-                                ArrayList<Cinema> cinemas = new ArrayList<Cinema>();
-                                JsonArray jsonArray = jsonArrayResponse.getResult();
-                                for(JsonElement element : jsonArray) {
-                                    cinemas.add(new Cinema(element.getAsJsonObject()));
-                                }
-                                cinemaAdapter = new CinemaAdapter(getActivity(),android.R.layout.simple_list_item_1,cinemas);
-                                lstCinema.setAdapter(cinemaAdapter);
-                            }
-                            else {
-                                // Erreur 404
-
-                            }
+                            cinemaAdapter = new OldCinemaAdapter(getActivity(),
+                                    getActivity().getLayoutInflater(),jsonArray);
+                            lstCinema.setAdapter(cinemaAdapter);
 
                             progressDialog.dismiss();
                         }

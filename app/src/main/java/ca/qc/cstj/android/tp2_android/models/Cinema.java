@@ -15,7 +15,7 @@ public class Cinema {
     private String adresse;
     private String codePostal;
     private String telephone;
-    private List<Horaire> listeHoraires;
+    private Horaire horaire;
 
     public Cinema(JsonObject jsonObject) {
         href = jsonObject.getAsJsonPrimitive("href").getAsString();
@@ -24,7 +24,7 @@ public class Cinema {
         adresse = jsonObject.getAsJsonPrimitive("adresse").getAsString();
         codePostal = jsonObject.getAsJsonPrimitive("codePostal").getAsString();
         telephone = jsonObject.getAsJsonPrimitive("telephone").getAsString();
-        //listeHoraires = new ArrayList<Horaire>(JsonObject.getAsJsonObject("horaires"));
+        horaire = new Horaire(jsonObject.getAsJsonObject("horaires"));
     }
 
     public String getHref() {
