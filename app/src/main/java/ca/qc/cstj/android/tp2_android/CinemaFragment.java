@@ -14,18 +14,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.Response;
 
-import org.apache.http.HttpStatus;
-
-import java.util.ArrayList;
-
 import ca.qc.cstj.android.tp2_android.adapters.CinemaAdapter;
-import ca.qc.cstj.android.tp2_android.adapters.OldCinemaAdapter;
-import ca.qc.cstj.android.tp2_android.models.Cinema;
 import ca.qc.cstj.android.tp2_android.services.ServicesURI;
 
 public class CinemaFragment extends Fragment{
@@ -38,7 +31,7 @@ public class CinemaFragment extends Fragment{
 
         private ListView lstCinema;
         private ProgressDialog progressDialog;
-        private OldCinemaAdapter cinemaAdapter;
+        private CinemaAdapter cinemaAdapter;
 
 
         /**
@@ -75,10 +68,10 @@ public class CinemaFragment extends Fragment{
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    String href = cinemaAdapter.getItem(position).getHref();
+                    String href = cinemaAdapter.getItem(position).getAsJsonPrimitive("href").getAsString();
 
                     FragmentTransaction transaction =  getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.container,DetailCinemaFragment.newInstance(href))
+                    transaction.replace(R.id.container,CinemaHoraireFragment.newInstance(href))
                             .addToBackStack("");
                     transaction.commit();
 
@@ -94,12 +87,13 @@ public class CinemaFragment extends Fragment{
             Ion.with(getActivity())
                     .load(ServicesURI.CINEMAS_SERVICE_URI)
                     .asJsonArray()
-                    .setCallback(new FutureCallback<JsonArray>() {
+                    .withResponse()
+                    .setCallback(new FutureCallback<Response<JsonArray>>() {
                         @Override
-                        public void onCompleted(Exception e, JsonArray jsonArray) {
+                        public void onCompleted(Exception e, Response<JsonArray> response) {
 
-                            cinemaAdapter = new OldCinemaAdapter(getActivity(),
-                                    getActivity().getLayoutInflater(),jsonArray);
+                            cinemaAdapter = new CinemaAdapter(getActivity(),
+                                    getActivity().getLayoutInflater(), response.getResult());
                             lstCinema.setAdapter(cinemaAdapter);
 
                             progressDialog.dismiss();

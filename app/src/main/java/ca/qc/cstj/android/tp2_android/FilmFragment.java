@@ -2,27 +2,19 @@ package ca.qc.cstj.android.tp2_android;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.Response;
 
-import org.apache.http.HttpStatus;
-
-import java.util.ArrayList;
-
 import ca.qc.cstj.android.tp2_android.adapters.FilmAdapter;
-import ca.qc.cstj.android.tp2_android.models.Film;
 import ca.qc.cstj.android.tp2_android.services.ServicesURI;
 
 /**
@@ -72,7 +64,7 @@ public class FilmFragment extends Fragment{
 
             loadFilms();
 
-            lstFilm.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /*lstFilm.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -84,7 +76,7 @@ public class FilmFragment extends Fragment{
                     transaction.commit();
 
                 }
-            });
+            });*/
 
         }
 
@@ -98,20 +90,11 @@ public class FilmFragment extends Fragment{
                     .withResponse()
                     .setCallback(new FutureCallback<Response<JsonArray>>() {
                         @Override
-                        public void onCompleted(Exception e, Response<JsonArray> jsonArrayResponse) {
+                        public void onCompleted(Exception e, Response<JsonArray> response) {
 
-                            if(jsonArrayResponse.getHeaders().getResponseCode() == HttpStatus.SC_OK) {
-                                ArrayList<Film> films = new ArrayList<Film>();
-                                JsonArray jsonArray = jsonArrayResponse.getResult();
-                                for(JsonElement element : jsonArray) {
-                                    films.add(new Film(element.getAsJsonObject()));
-                                }
-                                filmAdapter = new FilmAdapter(getActivity(),android.R.layout.simple_list_item_1,films);
-                                lstFilm.setAdapter(filmAdapter);
-                            }
-                            else {
-                                // Erreur 404
-                            }
+                            filmAdapter = new FilmAdapter(getActivity(),
+                                    getActivity().getLayoutInflater(),response.getResult());
+                            lstFilm.setAdapter(filmAdapter);
 
                             progressDialog.dismiss();
                         }

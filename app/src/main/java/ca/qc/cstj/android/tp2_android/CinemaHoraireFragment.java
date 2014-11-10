@@ -21,20 +21,21 @@ import com.koushikdutta.ion.Ion;
 import java.util.Calendar;
 import ca.qc.cstj.android.tp2_android.helpers.DateParser;
 import ca.qc.cstj.android.tp2_android.models.Film;
+import ca.qc.cstj.android.tp2_android.models.Cinema;
 import ca.qc.cstj.android.tp2_android.models.Horaire;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DetailFilmFragment.OnFragmentInteractionListener} interface
+ * {@link CinemaHoraireFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link DetailFilmFragment#newInstance} factory method to
+ * Use the {@link CinemaHoraireFragment#newInstance} factory method to
  * create an instance of this fragment.
  *
  */
 public class CinemaHoraireFragment extends Fragment {
-    /*// TODO: Rename parameter arguments, choose names that match
+    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_HREF = "href";
 
@@ -56,12 +57,12 @@ public class CinemaHoraireFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param href href de l'employé a afficher
-     * @return A new instance of fragment DetailFilmFragment.
-     *//*
+     * @param href href du cinéma a afficher
+     * @return A new instance of fragment CinemaHoraireFragment.
+     */
     // TODO: Rename and change types and number of parameters
-    public static DetailFilmFragment newInstance(String href) {
-        DetailFilmFragment fragment = new DetailFilmFragment();
+    /*public static CinemaHoraireFragment newInstance(String href) {
+        CinemaHoraireFragment fragment = new CinemaHoraireFragment();
         Bundle args = new Bundle();
         args.putString(ARG_HREF, href);
         fragment.setArguments(args);
@@ -94,39 +95,11 @@ public class CinemaHoraireFragment extends Fragment {
         return view;
     }
 
-    private void ajouterCommentaire() {
-
-        JsonObject body = new JsonObject();
-        // TODO: ID
-        body.addProperty("texte",txtCommentaire.getText().toString());
-        body.addProperty("note",txtNote.getText().toString());
-        body.addProperty("auteur",txtPseudo.getText().toString());
-
-        Calendar c = Calendar.getInstance();
-        int seconds = c.get(Calendar.SECOND);
-
-        body.addProperty("dateHeure", seconds);
-
-        Ion.with(getActivity())
-                .load("POST",href)
-                .addHeader("Content-Type","application/json")
-                .setJsonObjectBody(body)
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject jsonObject) {
-                        Toast.makeText(getActivity().getApplicationContext(),
-                                "Commentaire ajouté!", Toast.LENGTH_LONG).show();
-                    }
-                });
-
-    }
-
     @Override
     public void onStart() {
         super.onStart();
 
-        progressDialog = ProgressDialog.show(getActivity(), "Films", "En chargement...", true, false);
+        progressDialog = ProgressDialog.show(getActivity(), "Cinémas", "En chargement...", true, false);
         Ion.with(getActivity())
                 .load(href)
                 .asJsonObject()
@@ -134,7 +107,7 @@ public class CinemaHoraireFragment extends Fragment {
                     @Override
                     public void onCompleted(Exception e, JsonObject jsonObject) {
 
-                        film = new Film(jsonObject);
+                        horaire = new Horaire(jsonObject);
 
                         tvTitre.setText(film.getTitre());
                         tvPays.setText(film.getPays());
@@ -162,7 +135,7 @@ public class CinemaHoraireFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (CinemaHoraireFragment.OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -173,7 +146,7 @@ public class CinemaHoraireFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
+    }*/
 
 
     /**
@@ -186,8 +159,8 @@ public class CinemaHoraireFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    /*public interface OnFragmentInteractionListener {
+    public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
-    }*/
+    }
 }
