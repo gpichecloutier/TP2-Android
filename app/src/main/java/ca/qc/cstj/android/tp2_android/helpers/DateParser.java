@@ -14,12 +14,21 @@ public class DateParser {
         return formatter.parseDateTime(strDate);
     }
 
-    public static DateTime Parse(String strDate) {
+    public static DateTime ParseToDate(String strDate) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
         return formatter.parseDateTime(strDate);
     }
 
-    public static String Parse(DateTime date) {
+    public static String ParseToDate(DateTime date) {
         return date.toString("yyyy-MM-dd");
+    }
+
+    public static DateTime ParseToTime(String strDate) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("hh:mm");
+        return formatter.parseDateTime(strDate);
+    }
+
+    public static String ParseToTime(DateTime date) {
+        return date.toString("hh:mm");
     }
 }

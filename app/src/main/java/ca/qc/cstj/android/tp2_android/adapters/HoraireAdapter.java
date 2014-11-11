@@ -11,7 +11,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
-
+import ca.qc.cstj.android.tp2_android.helpers.DateParser;
 import ca.qc.cstj.android.tp2_android.R;
 import ca.qc.cstj.android.tp2_android.models.Horaire;
 
@@ -55,19 +55,25 @@ public class HoraireAdapter extends BaseAdapter {
         if(convertView == null) {
             convertView = mInflater.inflate(R.layout.row_horaire,null);
             horaireViewHolder = new HoraireViewHolder();
-            horaireViewHolder.txtNom = (TextView)convertView.findViewById(R.id.txtNom);
-            horaireViewHolder.txtAdresse = (TextView)convertView.findViewById(R.id.txtAdresse);
+            horaireViewHolder.txtTitre = (TextView)convertView.findViewById(R.id.txtTitre);
+            horaireViewHolder.txtDate = (TextView)convertView.findViewById(R.id.txtDate);
+            horaireViewHolder.txtHeure = (TextView)convertView.findViewById(R.id.txtHeure);
 
             convertView.setTag(horaireViewHolder);
         } else {
             horaireViewHolder = (HoraireViewHolder)convertView.getTag();
         }
 
-        JsonObject cinema = getItem(position);
+        JsonObject horaire = getItem(position);
 
-        horaireViewHolder.txtNom.setText(cinema.getAsJsonPrimitive("nom").getAsString());
-        horaireViewHolder.txtAdresse.setText(cinema.getAsJsonPrimitive("adresse").getAsString());
+        horaireViewHolder.txtTitre.setText(horaire.getAsJsonPrimitive("titre").getAsString());
+        DateParser dateParser = new DateParser();
+        String result = horaire.getAsJsonPrimitive("dateHeure").toString();
+        String date = dateParser.ParseToDate(result).toString();
+        String heure = dateParser.ParseToTime(result).toString();
 
+        horaireViewHolder.txtDate.setText(date);
+        horaireViewHolder.txtHeure.setText(heure);
 
 
         return convertView;
@@ -75,7 +81,8 @@ public class HoraireAdapter extends BaseAdapter {
     }
 
     private static class HoraireViewHolder {
-        public TextView txtNom;
-        public TextView txtAdresse;
+        public TextView txtTitre;
+        public TextView txtDate;
+        public TextView txtHeure;
     }
 }

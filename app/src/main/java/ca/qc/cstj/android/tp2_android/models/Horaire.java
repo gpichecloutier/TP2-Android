@@ -30,4 +30,36 @@ public class Horaire {
         }
 
     }
+
+    public String getHref() {
+        return href;
+    }
+
+    public void setHref(String href) {
+        this.href = href;
+    }
+
+    public Cinema getCinema() {
+        return cinema;
+    }
+
+    public void setCinema(Cinema cinema) {
+        this.cinema = cinema;
+    }
+
+    public Film getFilm() {
+        return film;
+    }
+
+    public void setFilm(Film film) {
+        this.film = film;
+    }
+
+    public DateTime getDateHeure() {
+        return dateHeure;
+    }
+
+    public void setDateHeure(DateTime dateHeure) {
+        this.dateHeure = dateHeure;
+    }
 }

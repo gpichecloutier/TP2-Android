@@ -41,9 +41,9 @@ public class CinemaHoraireFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String href;
-    private TextView tvTitre;
-    private TextView tvDate;
-    private TextView tvHeure;
+    private TextView txtTitre;
+    private TextView txtDate;
+    private TextView txtHeure;
 
 
     private Horaire horaire;
@@ -61,7 +61,7 @@ public class CinemaHoraireFragment extends Fragment {
      * @return A new instance of fragment CinemaHoraireFragment.
      */
     // TODO: Rename and change types and number of parameters
-    /*public static CinemaHoraireFragment newInstance(String href) {
+    public static CinemaHoraireFragment newInstance(String href) {
         CinemaHoraireFragment fragment = new CinemaHoraireFragment();
         Bundle args = new Bundle();
         args.putString(ARG_HREF, href);
@@ -88,9 +88,9 @@ public class CinemaHoraireFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cinema_horaire, container, false);
 
-        tvTitre = (TextView) view.findViewById(R.id.tvTitre);
-        tvHeure = (TextView) view.findViewById(R.id.tvHeure);
-        tvDate = (TextView) view.findViewById(R.id.tvDate);
+        txtTitre = (TextView) view.findViewById(R.id.txtTitre);
+        txtHeure = (TextView) view.findViewById(R.id.txtHeure);
+        txtDate = (TextView) view.findViewById(R.id.txtDate);
 
         return view;
     }
@@ -99,7 +99,7 @@ public class CinemaHoraireFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        progressDialog = ProgressDialog.show(getActivity(), "Cinémas", "En chargement...", true, false);
+        progressDialog = ProgressDialog.show(getActivity(), "Horaires", "En chargement...", true, false);
         Ion.with(getActivity())
                 .load(href)
                 .asJsonObject()
@@ -109,12 +109,9 @@ public class CinemaHoraireFragment extends Fragment {
 
                         horaire = new Horaire(jsonObject);
 
-                        tvTitre.setText(film.getTitre());
-                        tvPays.setText(film.getPays());
-                        tvGenre.setText(film.getGenre());
-                        tvClasse.setText(film.getClasse());
-                        tvRealisateur.setText(film.getRealisateur());
-                        tvDuree.setText(film.getDuree());
+                        txtTitre.setText(horaire.getFilm().getTitre());
+                        txtDate.setText(horaire.getDateHeure().toString("yyyy-MM-dd"));
+                        txtHeure.setText(horaire.getDateHeure().toString("hh:mm"));
 
                         progressDialog.dismiss();
 
@@ -146,7 +143,7 @@ public class CinemaHoraireFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }*/
+    }
 
 
     /**
