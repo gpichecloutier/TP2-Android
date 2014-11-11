@@ -101,13 +101,16 @@ public class CinemaHoraireFragment extends Fragment {
 
         progressDialog = ProgressDialog.show(getActivity(), "Horaires", "En chargement...", true, false);
         Ion.with(getActivity())
-                .load(href)
+                .load(href + "/horaires")
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject jsonObject) {
 
                         horaire = new Horaire(jsonObject);
+
+                        
+                        for ( : jsonObject)
 
                         txtTitre.setText(horaire.getFilm().getTitre());
                         txtDate.setText(horaire.getDateHeure().toString("yyyy-MM-dd"));
