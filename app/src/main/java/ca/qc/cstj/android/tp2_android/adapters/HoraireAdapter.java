@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -18,31 +19,15 @@ import ca.qc.cstj.android.tp2_android.models.Horaire;
 /**
  * Created by 1247308 on 2014-11-05.
  */
-public class HoraireAdapter extends BaseAdapter {
-    private Context mContext;
-    private LayoutInflater mInflater;
-    private JsonArray mJsonArray;
+public class HoraireAdapter extends ArrayAdapter<Horaire> {
+    private ArrayList<Horaire> horaires;
+    private LayoutInflater layoutInflater;
 
 
-    public HoraireAdapter(Context context, LayoutInflater inflater, JsonArray jsonArray) {
-        mContext = context;
-        mInflater = inflater;
-        mJsonArray = jsonArray;
-    }
-
-    @Override
-    public int getCount() {
-        return mJsonArray.size();
-    }
-
-    @Override
-    public JsonObject getItem(int position) {
-        return mJsonArray.get(position).getAsJsonObject();
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
+    public HoraireAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Horaire> listeHoraires) {
+        super(context, R.layout.row_horaire,listeHoraires);
+        this.horaires = listeHoraires;
+        this.layoutInflater = layoutInflater;
     }
 
     @Override
@@ -50,30 +35,23 @@ public class HoraireAdapter extends BaseAdapter {
 
         HoraireViewHolder horaireViewHolder;
 
-
-
         if(convertView == null) {
-            convertView = mInflater.inflate(R.layout.row_horaire,null);
+            convertView = layoutInflater.inflate(R.layout.row_horaire,null,true);
             horaireViewHolder = new HoraireViewHolder();
             horaireViewHolder.txtTitre = (TextView)convertView.findViewById(R.id.txtTitre);
-            horaireViewHolder.txtDate = (TextView)convertView.findViewById(R.id.txtDate);
-            horaireViewHolder.txtHeure = (TextView)convertView.findViewById(R.id.txtHeure);
+            horaireViewHolder.txtHoraire1 = (TextView)convertView.findViewById(R.id.txtHoraire1);
+            horaireViewHolder.txtHoraire2 = (TextView)convertView.findViewById(R.id.txtHoraire2);
 
             convertView.setTag(horaireViewHolder);
         } else {
             horaireViewHolder = (HoraireViewHolder)convertView.getTag();
         }
 
-        JsonObject horaire = getItem(position);
+        Horaire horaire = getItem(position);
 
-        horaireViewHolder.txtTitre.setText(horaire.getAsJsonPrimitive("titre").getAsString());
-        DateParser dateParser = new DateParser();
-        String result = horaire.getAsJsonPrimitive("dateHeure").toString();
-        String date = dateParser.ParseToDate(result).toString();
-        String heure = dateParser.ParseToTime(result).toString();
-
-        horaireViewHolder.txtDate.setText(date);
-        horaireViewHolder.txtHeure.setText(heure);
+        horaireViewHolder.txtTitre.setText(horaire.getTitre());
+        horaireViewHolder.txtHoraire1.setText(horaire.getDate() + ", " + horaire.getHeure());
+        horaireViewHolder.txtHoraire2.setText(horaire.getDate() + ", " + horaire.getHeure());
 
 
         return convertView;
@@ -82,7 +60,7 @@ public class HoraireAdapter extends BaseAdapter {
 
     private static class HoraireViewHolder {
         public TextView txtTitre;
-        public TextView txtDate;
-        public TextView txtHeure;
+        public TextView txtHoraire1;
+        public TextView txtHoraire2;
     }
 }

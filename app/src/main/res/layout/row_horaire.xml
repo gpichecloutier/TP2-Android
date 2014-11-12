@@ -10,26 +10,24 @@
             android:orientation="vertical">
             <TextView
                 android:id="@+id/txtTitre"
-                android:paddingTop="20dp"
+                android:paddingTop="5dp"
                 android:textSize="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/txtDate"
+                android:id="@+id/txtHoraire1"
                 android:textSize="12dp"
-                android:paddingBottom="20dp"
+                android:paddingLeft="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/txtHoraire2"
+                android:textSize="12dp"
                 android:paddingLeft="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/txtHeure"
-                android:textSize="12dp"
-                android:paddingBottom="20dp"
-                android:paddingLeft="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
         </LinearLayout>
     </TableRow>
 </TableLayout>

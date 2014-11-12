@@ -1,5 +1,7 @@
 package ca.qc.cstj.android.tp2_android.models;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import org.joda.time.DateTime;
@@ -11,13 +13,13 @@ import ca.qc.cstj.android.tp2_android.helpers.DateParser;
  */
 public class Horaire {
 
-    private String href;
-    private Cinema cinema;
-    private Film film;
-    private DateTime dateHeure;
+    private String nomCinema;
+    private String titre;
+    private String date;
+    private String heure;
 
     public Horaire(JsonObject jsonObject) {
-        href = jsonObject.get("href").getAsString();
+        /*href = jsonObject.get("href").getAsString();
 
         if(jsonObject.has("cinema")) {
             cinema = new Cinema(jsonObject.getAsJsonObject("cinema"));
@@ -27,39 +29,47 @@ public class Horaire {
         }
         if(jsonObject.has("dateHeure")) {
             dateHeure = DateParser.ParseIso(jsonObject.getAsJsonPrimitive("dateHeure").getAsString());
-        }
+        }*/
 
+        DateParser dateParser = new DateParser();
+
+                    titre = jsonObject.getAsJsonPrimitive("film").getAsString();
+                    nomCinema = jsonObject.getAsJsonPrimitive("cinema").getAsString();
+                    DateTime dtDateHeure = DateParser.ParseIso(jsonObject.getAsJsonPrimitive("dateHeure").getAsString());
+                    date = dateParser.ParseToDate(dtDateHeure);
+                    heure = dateParser.ParseToTime(dtDateHeure);
+                }
+
+
+    public String getNomCinema() {
+        return nomCinema;
     }
 
-    public String getHref() {
-        return href;
+    public void setNomCinema(String nomCinema) {
+        this.nomCinema = nomCinema;
     }
 
-    public void setHref(String href) {
-        this.href = href;
+    public String getTitre() {
+        return titre;
     }
 
-    public Cinema getCinema() {
-        return cinema;
+    public void setTitre(String titre) {
+        this.titre = titre;
     }
 
-    public void setCinema(Cinema cinema) {
-        this.cinema = cinema;
+    public String getDate() {
+        return date;
     }
 
-    public Film getFilm() {
-        return film;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public void setFilm(Film film) {
-        this.film = film;
+    public String getHeure() {
+        return heure;
     }
 
-    public DateTime getDateHeure() {
-        return dateHeure;
-    }
-
-    public void setDateHeure(DateTime dateHeure) {
-        this.dateHeure = dateHeure;
+    public void setHeure(String heure) {
+        this.heure = heure;
     }
 }
