@@ -14,9 +14,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+
+import org.joda.time.DateTime;
 
 import java.util.Calendar;
 import ca.qc.cstj.android.tp2_android.helpers.DateParser;
@@ -107,10 +112,35 @@ public class CinemaHoraireFragment extends Fragment {
                     @Override
                     public void onCompleted(Exception e, JsonObject jsonObject) {
 
-                        horaire = new Horaire(jsonObject);
+                        DateParser dateParser = new DateParser();
+                        JsonObject horaires;
+                        if(jsonObject.has("horaires")) {
+                            horaires = jsonObject.getAsJsonObject("horaires");
+                            if (horaires.has("items")) {
+                                JsonArray items = horaires.getAsJsonArray("items");
 
-                        
-                        for ( : jsonObject)
+                                for (JsonElement horaire : items)
+                                {
+                                    JsonObject obj = horaire.getAsJsonObject();
+                                    String titre = obj.getAsJsonPrimitive("idFilm").toString();
+
+                                    String date = obj.getAsJsonPrimitive("dateHeure").toString();
+                                    DateTime dtDate = dateParser.ParseToDate(date);
+                                    String sDate = dateParser.ParseToDate(dtDate);
+                                    DateTime dtHeure = dateParser.ParseToTime(date);
+                                    String sHeure = dateParser.ParseToTime(dtHeure);
+                                    txtTitre.setText(titre);
+                                    txtDate.setText(sDate);
+                                    txtHeure.setText(sHeure);
+                                }
+                            }
+                        }
+
+                        /*if(horaires.has("items")) {
+                            horaires = jsonObject.getAsJsonObject("items");
+                        }*/
+                        // On doit décomposer l'object.
+
 
                         txtTitre.setText(horaire.getFilm().getTitre());
                         txtDate.setText(horaire.getDateHeure().toString("yyyy-MM-dd"));
