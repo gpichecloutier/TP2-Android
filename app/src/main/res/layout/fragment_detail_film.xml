@@ -25,50 +25,50 @@
             android:orientation="vertical">
                     <TextView
                         android:id="@+id/tvTitre"
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Titre" />
+
+                        /><!-- android:text="Titre" -->
 
                     <TextView
                         android:id="@+id/tvPays"
                         android:paddingTop="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pays"
-                        />
+
+                        /><!-- android:text="Pays"-->
 
                     <TextView
                         android:id="@+id/tvGenre"
                         android:paddingTop="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Genre"
-                        />
+
+                        /><!-- android:text="Genre"-->
 
                     <TextView
                         android:id="@+id/tvClasse"
                         android:paddingTop="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Classe"
-                        />
 
+                        />
+                        <!-- android:text="Classe"-->
                     <TextView
                         android:id="@+id/tvRealisateur"
                         android:paddingTop="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Réalisé par ________________"
-                        />
+
+                        /><!-- android:text="Réalisé par ________________"-->
 
                     <TextView
                         android:id="@+id/tvDuree"
                         android:paddingTop="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Durée : ___ minutes"
-                        />
+
+                        /><!-- android:text="Durée : ___ minutes" -->
         </LinearLayout>
     </LinearLayout>
 

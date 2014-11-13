@@ -11,23 +11,66 @@ import ca.qc.cstj.android.tp2_android.helpers.DateParser;
  */
 public class Commentaire {
     private String href;
-    private Film film;
+    private String texte;
     private Integer note;
     private String auteur;
-    private DateTime dateHeure;
+    private String date;
 
     public Commentaire(JsonObject jsonObject) {
         href = jsonObject.get("href").getAsString();
 
-        note = jsonObject.getAsJsonPrimitive("note").getAsInt();
-        auteur = jsonObject.getAsJsonPrimitive("auteur").getAsString();
-
-        if(jsonObject.has("film")) {
-            film = new Film(jsonObject.getAsJsonObject("film"));
+        if(jsonObject.has("texte")) {
+            texte = jsonObject.getAsJsonPrimitive("texte").getAsString();
+        }
+        if(jsonObject.has("note")) {
+            note = jsonObject.getAsJsonPrimitive("note").getAsInt();
+        }
+        if(jsonObject.has("auteur")) {
+            auteur = jsonObject.getAsJsonPrimitive("auteur").getAsString();
         }
         if(jsonObject.has("dateHeure")) {
-            dateHeure = DateParser.ParseIso(jsonObject.getAsJsonPrimitive("dateHeure").getAsString());
+            date = DateParser.ParseToDate(DateParser.ParseIso(jsonObject.getAsJsonPrimitive("dateHeure").getAsString()));
         }
 
+    }
+
+    public String getHref() {
+        return href;
+    }
+
+    public void setHref(String href) {
+        this.href = href;
+    }
+
+    public Integer getNote() {
+        return note;
+    }
+
+    public void setNote(Integer note) {
+        this.note = note;
+    }
+
+    public String getAuteur() {
+        return auteur;
+    }
+
+    public void setAuteur(String auteur) {
+        this.auteur = auteur;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTexte() {
+        return texte;
+    }
+
+    public void setTexte(String texte) {
+        this.texte = texte;
     }
 }

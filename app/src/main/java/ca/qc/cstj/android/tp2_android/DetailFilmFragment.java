@@ -10,17 +10,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+
+import ca.qc.cstj.android.tp2_android.adapters.CinemaAdapter;
+import ca.qc.cstj.android.tp2_android.adapters.CommentaireAdapter;
+import ca.qc.cstj.android.tp2_android.adapters.HoraireAdapter;
 import ca.qc.cstj.android.tp2_android.helpers.DateParser;
+import ca.qc.cstj.android.tp2_android.models.Commentaire;
 import ca.qc.cstj.android.tp2_android.models.Film;
+import ca.qc.cstj.android.tp2_android.models.Horaire;
 
 
 /**
@@ -45,6 +55,9 @@ public class DetailFilmFragment extends Fragment {
     private TextView tvGenre;
     private TextView tvRealisateur;
     private TextView tvDuree;
+
+    private ListView lstCommentaire;
+    private CommentaireAdapter commentaireAdapter;
 
     private EditText txtCommentaire;
     private EditText txtPseudo;
@@ -99,12 +112,12 @@ public class DetailFilmFragment extends Fragment {
         tvRealisateur = (TextView)view.findViewById(R.id.tvRealisateur);
         tvDuree = (TextView)view.findViewById(R.id.tvDuree);
 
-        btnAjouter.setOnClickListener(new View.OnClickListener() {
+        /*btnAjouter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ajouterCommentaire();
             }
-        });
+        });*/
 
         return view;
     }
@@ -141,7 +154,9 @@ public class DetailFilmFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        progressDialog = ProgressDialog.show(getActivity(), "Films", "En chargement...", true, false);
+        lstCommentaire = (ListView) getActivity().findViewById(R.id.list_commentaires);
+
+        progressDialog = ProgressDialog.show(getActivity(), "", "En chargement...", true, false);
         Ion.with(getActivity())
                 .load(href)
                 .asJsonObject()
@@ -154,15 +169,38 @@ public class DetailFilmFragment extends Fragment {
                         tvTitre.setText(film.getTitre());
                         tvPays.setText(film.getPays());
                         tvGenre.setText(film.getGenre());
+                        tvDuree.setText(film.getDuree().toString());
                         tvClasse.setText(film.getClasse());
                         tvRealisateur.setText(film.getRealisateur());
-                        tvDuree.setText(film.getDuree());
+
+                        Ion.with(getActivity())
+                                .load(href + "/commentaires")
+                                .asJsonObject()
+                                .setCallback(new FutureCallback<JsonObject>() {
+                                    @Override
+                                    public void onCompleted(Exception e, JsonObject jsonObject) {
+
+                                        ArrayList<Commentaire> listeCommentaires = new ArrayList<Commentaire>();
+
+                                            if (jsonObject.has("commentaires")) {
+                                                JsonArray commentaires = jsonObject.getAsJsonArray("commentaires");
+                                                // On veut juste en afficher 2, on compte le nombre de fois qu'on instancie un horaire pour un cinéma
+
+                                                for (JsonElement commentaire : commentaires) {
+                                                    listeCommentaires.add(new Commentaire(commentaire.getAsJsonObject()));
+                                                }
+
+                                                commentaireAdapter = new CommentaireAdapter(getActivity(), getActivity().getLayoutInflater(), listeCommentaires);
+                                                lstCommentaire.setAdapter(commentaireAdapter);
+                                            }
+                                    }
+                                });
 
                         progressDialog.dismiss();
 
                     }
 
-                });
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
