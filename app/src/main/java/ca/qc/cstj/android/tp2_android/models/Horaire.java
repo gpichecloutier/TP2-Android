@@ -14,31 +14,23 @@ import ca.qc.cstj.android.tp2_android.helpers.DateParser;
 public class Horaire {
 
     private String nomCinema;
+    private int idFilm;
+    private String href;
     private String titre;
-    private String date;
-    private String heure;
+    private String date1;
+    private String heure1;
+    private String date2;
+    private String heure2;
 
-    public Horaire(JsonObject jsonObject) {
-        /*href = jsonObject.get("href").getAsString();
-
-        if(jsonObject.has("cinema")) {
-            cinema = new Cinema(jsonObject.getAsJsonObject("cinema"));
-        }
-        if(jsonObject.has("film")) {
-            film = new Film(jsonObject.getAsJsonObject("film"));
-        }
-        if(jsonObject.has("dateHeure")) {
-            dateHeure = DateParser.ParseIso(jsonObject.getAsJsonPrimitive("dateHeure").getAsString());
-        }*/
-
-        DateParser dateParser = new DateParser();
-
-                    titre = jsonObject.getAsJsonPrimitive("film").getAsString();
-                    nomCinema = jsonObject.getAsJsonPrimitive("cinema").getAsString();
-                    DateTime dtDateHeure = DateParser.ParseIso(jsonObject.getAsJsonPrimitive("dateHeure").getAsString());
-                    date = dateParser.ParseToDate(dtDateHeure);
-                    heure = dateParser.ParseToTime(dtDateHeure);
-                }
+    public Horaire(String titre, int idFilm, String href) {
+        this.titre = titre;
+        this.idFilm = idFilm;
+        this.href = href;
+        this.date1 = date1;
+        this.date2 = date2;
+        this.heure1 = heure1;
+        this.heure2 = heure2;
+    }
 
 
     public String getNomCinema() {
@@ -57,19 +49,51 @@ public class Horaire {
         this.titre = titre;
     }
 
-    public String getDate() {
-        return date;
+    public String getDate1() {
+        return date1;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDate1(String date1) {
+        this.date1 = date1;
     }
 
-    public String getHeure() {
-        return heure;
+    public String getHeure1() {
+        return heure1;
     }
 
-    public void setHeure(String heure) {
-        this.heure = heure;
+    public void setHeure1(String heure1) {
+        this.heure1 = heure1;
+    }
+
+    public String getDate2() {
+        return date2;
+    }
+
+    public void setDate2(String date2) {
+        this.date2 = date2;
+    }
+
+    public String getHeure2() {
+        return heure2;
+    }
+
+    public void setHeure2(String heure2) {
+        this.heure2 = heure2;
+    }
+
+    public int getIdFilm() {
+        return idFilm;
+    }
+
+    public void setIdFilm(int idFilm) {
+        this.idFilm = idFilm;
+    }
+
+    public String getHref() {
+        return href;
+    }
+
+    public void setHref(String href) {
+        this.href = href;
     }
 }

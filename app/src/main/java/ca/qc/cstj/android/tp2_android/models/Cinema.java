@@ -24,7 +24,6 @@ public class Cinema {
         adresse = jsonObject.getAsJsonPrimitive("adresse").getAsString();
         codePostal = jsonObject.getAsJsonPrimitive("codePostal").getAsString();
         telephone = jsonObject.getAsJsonPrimitive("telephone").getAsString();
-        horaire = new Horaire(jsonObject.getAsJsonObject("horaires"));
     }
 
     public String getHref() {

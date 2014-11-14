@@ -9,7 +9,12 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+
+import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import ca.qc.cstj.android.tp2_android.helpers.DateParser;
@@ -33,32 +38,65 @@ public class HoraireAdapter extends ArrayAdapter<Horaire> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        HoraireViewHolder horaireViewHolder;
+        final HoraireViewHolder horaireViewHolder;
+        final View myView = layoutInflater.inflate(R.layout.row_horaire,null,true);
 
         if(convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.row_horaire,null,true);
             horaireViewHolder = new HoraireViewHolder();
-            horaireViewHolder.txtTitre = (TextView)convertView.findViewById(R.id.txtTitre);
-            horaireViewHolder.txtHoraire1 = (TextView)convertView.findViewById(R.id.txtHoraire1);
-            horaireViewHolder.txtHoraire2 = (TextView)convertView.findViewById(R.id.txtHoraire2);
+            horaireViewHolder.txtTitre = (TextView)myView.findViewById(R.id.txtTitre);
+            horaireViewHolder.txtHoraire1 = (TextView)myView.findViewById(R.id.txtHoraire1);
+            horaireViewHolder.txtHoraire2 = (TextView)myView.findViewById(R.id.txtHoraire2);
 
-            convertView.setTag(horaireViewHolder);
+            myView.setTag(horaireViewHolder);
         } else {
-            horaireViewHolder = (HoraireViewHolder)convertView.getTag();
+            horaireViewHolder = (HoraireViewHolder)myView.getTag();
         }
 
-        Horaire horaire = getItem(position);
+        final Horaire horaire = getItem(position);
 
-        horaireViewHolder.txtTitre.setText(horaire.getTitre());
-        horaireViewHolder.txtHoraire1.setText(horaire.getDate() + ", " + horaire.getHeure());
-        horaireViewHolder.txtHoraire2.setText(horaire.getDate() + ", " + horaire.getHeure());
+        Ion.with(getContext())
+                .load(horaire.getHref() + "/films/" + horaire.getIdFilm() + "/horaires?days=2")
+                .asJsonArray()
+                .setCallback(new FutureCallback<JsonArray>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonArray jsonArray) {
 
+                        HoraireViewHolder horaireViewHolder = (HoraireViewHolder)myView.getTag();
+                        int i = 0;
+                        for (JsonElement eHoraire : jsonArray) {
+                            JsonObject objHoraire = eHoraire.getAsJsonObject();
 
-        return convertView;
+                            if (i == 0) {
+                                DateTime dtDateHeure = DateParser.ParseIso(objHoraire.getAsJsonPrimitive("dateHeure").getAsString());
+                                horaire.setDate1(DateParser.ParseToDate(dtDateHeure));
+                                horaire.setHeure1(DateParser.ParseToTime(dtDateHeure));
+                            }
+
+                            if (i == 1) {
+                                DateTime dtDateHeure = DateParser.ParseIso(objHoraire.getAsJsonPrimitive("dateHeure").getAsString());
+                                horaire.setDate2(DateParser.ParseToDate(dtDateHeure));
+                                horaire.setHeure2(DateParser.ParseToTime(dtDateHeure));
+                            }
+                            i++;
+                        }
+
+                        horaireViewHolder.txtTitre.setText(horaire.getTitre());
+                        horaireViewHolder.txtHoraire1.setText(horaire.getDate1() + ", " + horaire.getHeure1());
+                        horaireViewHolder.txtHoraire2.setText(horaire.getDate2() + ", " + horaire.getHeure2());
+                    }
+
+                });
+
+        return myView;
 
     }
 
-    private static class HoraireViewHolder {
+    private void updateView(HoraireViewHolder horaireViewHolder, Horaire horaire){
+
+
+    }
+
+    private class HoraireViewHolder {
         public TextView txtTitre;
         public TextView txtHoraire1;
         public TextView txtHoraire2;

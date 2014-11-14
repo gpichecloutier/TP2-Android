@@ -50,6 +50,8 @@ public class CinemaHoraireFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String href;
+    private String titre;
+    private int idFilm;
     private ListView lstHoraire;
     private HoraireAdapter horaireAdapter;
 
@@ -104,29 +106,26 @@ public class CinemaHoraireFragment extends Fragment {
 
         progressDialog = ProgressDialog.show(getActivity(), "Horaires", "En chargement...", true, false);
         Ion.with(getActivity())
-                .load(href + "/horaires")
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
+                .load(href + "/films")
+                .asJsonArray()
+                .setCallback(new FutureCallback<JsonArray>() {
                     @Override
-                    public void onCompleted(Exception e, JsonObject jsonObject) {
+                    public void onCompleted(Exception e, JsonArray jsonArray) {
                         ArrayList<Horaire> listeHoraires = new ArrayList<Horaire>();
-                        JsonObject horaires;
-                        // On doit décomposer l'objet
-                        if (jsonObject.has("horaires")) {
-                            horaires = jsonObject.getAsJsonObject("horaires");
-                            if (horaires.has("items")) {
-                                JsonArray items = horaires.getAsJsonArray("items");
-                                // On veut juste en afficher 2, on compte le nombre de fois qu'on instancie un horaire pour un cinéma
+                                // Pour chaque film
+                                for (JsonElement film : jsonArray) {
+                                    JsonObject objFilm = film.getAsJsonObject();
 
-                                for (JsonElement item : items) {
-                                    listeHoraires.add(new Horaire(item.getAsJsonObject()));
+                                    titre = objFilm.getAsJsonPrimitive("film").getAsString();
+                                    idFilm = objFilm.getAsJsonPrimitive("idFilm").getAsInt();
+
+                                    listeHoraires.add(new Horaire(titre, idFilm, href));
                                 }
 
                                 horaireAdapter = new HoraireAdapter(getActivity(), getActivity().getLayoutInflater(),listeHoraires);
                                 lstHoraire.setAdapter(horaireAdapter);
                                 progressDialog.dismiss();
-                            }
-                        }
+
                     }
                 });
     }
