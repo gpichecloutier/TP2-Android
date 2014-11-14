@@ -6,7 +6,7 @@
 
     <TableRow>
         <LinearLayout
-            android:layout_width="345dp"
+            android:layout_width="330dp"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/txtTexte"
@@ -29,7 +29,7 @@
                     android:id="@+id/txtNote"
                     android:gravity="left"
                     android:textSize="15dp"
-                    android:paddingBottom="20dp"
+                    android:paddingBottom="5dp"
                     android:paddingLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -21,8 +22,12 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 import ca.qc.cstj.android.tp2_android.adapters.CinemaAdapter;
 import ca.qc.cstj.android.tp2_android.adapters.CommentaireAdapter;
@@ -55,13 +60,15 @@ public class DetailFilmFragment extends Fragment {
     private TextView tvGenre;
     private TextView tvRealisateur;
     private TextView tvDuree;
+    private ImageView ivImage;
 
     private ListView lstCommentaire;
     private CommentaireAdapter commentaireAdapter;
 
-    private EditText txtCommentaire;
-    private EditText txtPseudo;
-    private EditText txtNote;
+    private EditText etCommentaire;
+    private EditText etPseudo;
+    private EditText etNote;
+
     private Button btnAjouter;
 
     private Film film;
@@ -111,13 +118,18 @@ public class DetailFilmFragment extends Fragment {
         tvClasse = (TextView) view.findViewById(R.id.tvClasse);
         tvRealisateur = (TextView)view.findViewById(R.id.tvRealisateur);
         tvDuree = (TextView)view.findViewById(R.id.tvDuree);
+        ivImage = (ImageView)view.findViewById(R.id.ivImage);
+        etCommentaire = (EditText) view.findViewById(R.id.etCommentaire);
+        etNote = (EditText)view.findViewById(R.id.etNote);
+        etPseudo = (EditText)view.findViewById(R.id.etPseudo);
+        btnAjouter = (Button)view.findViewById(R.id.btnAjouter);
 
-        /*btnAjouter.setOnClickListener(new View.OnClickListener() {
+        btnAjouter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ajouterCommentaire();
             }
-        });*/
+        });
 
         return view;
     }
@@ -126,18 +138,19 @@ public class DetailFilmFragment extends Fragment {
 
         JsonObject body = new JsonObject();
         // TODO: ID
-        body.addProperty("texte",txtCommentaire.getText().toString());
-        body.addProperty("note",txtNote.getText().toString());
-        body.addProperty("auteur",txtPseudo.getText().toString());
+        body.addProperty("idFilm",href.substring(href.length() - 1));
+        body.addProperty("texte",etCommentaire.getText().toString());
+        body.addProperty("note",etNote.getText().toString());
+        body.addProperty("auteur",etPseudo.getText().toString());
 
-        Calendar c = Calendar.getInstance();
-        int seconds = c.get(Calendar.SECOND);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss'Z'");
+        String nowAsISO = df.format(new Date());
 
-        body.addProperty("dateHeure", seconds);
+        body.addProperty("dateHeure", nowAsISO);
 
-        /*Ion.with(getActivity())
-                .load("POST",href)
-                .addHeader("Content-Type","application/json")
+        Ion.with(getActivity())
+                .load("POST",href + "/commentaires")
+                .addHeader("Content-Type", "application/json")
                 .setJsonObjectBody(body)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -146,8 +159,7 @@ public class DetailFilmFragment extends Fragment {
                         Toast.makeText(getActivity().getApplicationContext(),
                                 "Commentaire ajouté!", Toast.LENGTH_LONG).show();
                     }
-                });*/
-
+                });
     }
 
     @Override
@@ -166,12 +178,15 @@ public class DetailFilmFragment extends Fragment {
 
                         film = new Film(jsonObject);
 
+                        Ion.with(ivImage)
+                                .load(film.getImageUrl());
+
                         tvTitre.setText(film.getTitre());
                         tvPays.setText(film.getPays());
                         tvGenre.setText(film.getGenre());
-                        tvDuree.setText(film.getDuree().toString());
+                        tvDuree.setText("Durée : " + film.getDuree().toString() + " minutes");
                         tvClasse.setText(film.getClasse());
-                        tvRealisateur.setText(film.getRealisateur());
+                        tvRealisateur.setText("Réalisateur : " + film.getRealisateur());
 
                         Ion.with(getActivity())
                                 .load(href + "/commentaires")
@@ -182,17 +197,17 @@ public class DetailFilmFragment extends Fragment {
 
                                         ArrayList<Commentaire> listeCommentaires = new ArrayList<Commentaire>();
 
-                                            if (jsonObject.has("commentaires")) {
-                                                JsonArray commentaires = jsonObject.getAsJsonArray("commentaires");
-                                                // On veut juste en afficher 2, on compte le nombre de fois qu'on instancie un horaire pour un cinéma
+                                        if (jsonObject.has("commentaires")) {
+                                            JsonArray commentaires = jsonObject.getAsJsonArray("commentaires");
+                                            // On veut juste en afficher 2, on compte le nombre de fois qu'on instancie un horaire pour un cinéma
 
-                                                for (JsonElement commentaire : commentaires) {
-                                                    listeCommentaires.add(new Commentaire(commentaire.getAsJsonObject()));
-                                                }
-
-                                                commentaireAdapter = new CommentaireAdapter(getActivity(), getActivity().getLayoutInflater(), listeCommentaires);
-                                                lstCommentaire.setAdapter(commentaireAdapter);
+                                            for (JsonElement commentaire : commentaires) {
+                                                listeCommentaires.add(new Commentaire(commentaire.getAsJsonObject()));
                                             }
+
+                                            commentaireAdapter = new CommentaireAdapter(getActivity(), getActivity().getLayoutInflater(), listeCommentaires);
+                                            lstCommentaire.setAdapter(commentaireAdapter);
+                                        }
                                     }
                                 });
 
