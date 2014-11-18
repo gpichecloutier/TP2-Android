@@ -52,8 +52,7 @@ public class CinemaHoraireFragment extends Fragment {
 
 
     private Horaire horaire;
-    private Film film;;
-
+    private Film film;
 
     private ProgressDialog progressDialog;
 
@@ -148,6 +147,7 @@ public class CinemaHoraireFragment extends Fragment {
                         txtHeure.setText(horaire.getDateHeure().toString("hh:mm"));
 
                         progressDialog.dismiss();
+
                     }
 
                 });
