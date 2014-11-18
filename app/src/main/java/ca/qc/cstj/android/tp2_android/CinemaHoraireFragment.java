@@ -46,7 +46,6 @@ public class CinemaHoraireFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String href;
-<<<<<<< HEAD
     private TextView txtTitre;
     private TextView txtDate;
     private TextView txtHeure;
@@ -55,10 +54,6 @@ public class CinemaHoraireFragment extends Fragment {
     private Horaire horaire;
     private Film film;;
 
-=======
-    private ListView lstHoraire;
-    private HoraireAdapter horaireAdapter;
->>>>>>> parent of f64a793... fdsjklvndfjklsnvklsdfnvjksdflvnfsdjklnbgjnbgklnlk
 
     private ProgressDialog progressDialog;
 
@@ -117,7 +112,6 @@ public class CinemaHoraireFragment extends Fragment {
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject jsonObject) {
-<<<<<<< HEAD
 
                         DateParser dateParser = new DateParser();
                         JsonObject horaires;
@@ -154,26 +148,6 @@ public class CinemaHoraireFragment extends Fragment {
                         txtHeure.setText(horaire.getDateHeure().toString("hh:mm"));
 
                         progressDialog.dismiss();
-=======
-                        ArrayList<Horaire> listeHoraires = new ArrayList<Horaire>();
-                        JsonObject horaires;
-                        // On doit décomposer l'objet
-                        if (jsonObject.has("horaires")) {
-                            horaires = jsonObject.getAsJsonObject("horaires");
-                            if (horaires.has("items")) {
-                                JsonArray items = horaires.getAsJsonArray("items");
-                                // On veut juste en afficher 2, on compte le nombre de fois qu'on instancie un horaire pour un cinéma
-
-                                for (JsonElement item : items) {
-                                    listeHoraires.add(new Horaire(item.getAsJsonObject()));
-                                }
-
-                                horaireAdapter = new HoraireAdapter(getActivity(), getActivity().getLayoutInflater(),listeHoraires);
-                                lstHoraire.setAdapter(horaireAdapter);
-                                progressDialog.dismiss();
-                            }
-                        }
->>>>>>> parent of f64a793... fdsjklvndfjklsnvklsdfnvjksdflvnfsdjklnbgjnbgklnlk
                     }
 
                 });
