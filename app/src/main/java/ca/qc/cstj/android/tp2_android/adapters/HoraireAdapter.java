@@ -31,7 +31,6 @@ public class HoraireAdapter extends BaseAdapter {
     }
 
     @Override
-<<<<<<< HEAD
     public int getCount() {
         return mJsonArray.size();
     }
@@ -75,30 +74,6 @@ public class HoraireAdapter extends BaseAdapter {
 
         horaireViewHolder.txtTitre.setText(horaire.getTitre());
         horaireViewHolder.txtHeure.setText(horaire.getDate1() + ", " + horaire.getHeure1());
-=======
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        HoraireViewHolder horaireViewHolder;
-
-        if(convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.row_horaire,null,true);
-            horaireViewHolder = new HoraireViewHolder();
-            horaireViewHolder.txtTitre = (TextView)convertView.findViewById(R.id.txtTitre);
-            horaireViewHolder.txtHoraire1 = (TextView)convertView.findViewById(R.id.txtHoraire1);
-            horaireViewHolder.txtHoraire2 = (TextView)convertView.findViewById(R.id.txtHoraire2);
-
-            convertView.setTag(horaireViewHolder);
-        } else {
-            horaireViewHolder = (HoraireViewHolder)convertView.getTag();
-        }
-
-        Horaire horaire = getItem(position);
-
-        horaireViewHolder.txtTitre.setText(horaire.getTitre());
-        horaireViewHolder.txtHoraire1.setText(horaire.getDate() + ", " + horaire.getHeure());
-        horaireViewHolder.txtHoraire2.setText(horaire.getDate() + ", " + horaire.getHeure());
-
->>>>>>> parent of f64a793... fdsjklvndfjklsnvklsdfnvjksdflvnfsdjklnbgjnbgklnlk
 
         return convertView;
 
