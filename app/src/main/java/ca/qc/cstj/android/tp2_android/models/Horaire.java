@@ -1,7 +1,5 @@
 package ca.qc.cstj.android.tp2_android.models;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import org.joda.time.DateTime;
@@ -13,15 +11,18 @@ import ca.qc.cstj.android.tp2_android.helpers.DateParser;
  */
 public class Horaire {
 
-    private String nomCinema;
     private String titre;
     private String date1;
     private String heure1;
     private String date2;
     private String heure2;
+    private String href;
+    private Cinema cinema;
+    private Film film;
+    private DateTime dateHeure;
 
     public Horaire(JsonObject jsonObject) {
-        /*href = jsonObject.get("href").getAsString();
+        href = jsonObject.get("href").getAsString();
 
         if(jsonObject.has("cinema")) {
             cinema = new Cinema(jsonObject.getAsJsonObject("cinema"));
@@ -31,7 +32,7 @@ public class Horaire {
         }
         if(jsonObject.has("dateHeure")) {
             dateHeure = DateParser.ParseIso(jsonObject.getAsJsonPrimitive("dateHeure").getAsString());
-        }*/
+        }
 
         DateParser dateParser = new DateParser();
 
@@ -43,22 +44,24 @@ public class Horaire {
                     date2 = dateParser.ParseToDate(dtDateHeure);
                     heure2 = dateParser.ParseToTime(dtDateHeure);
                 }
+        }
 
-
-    public String getNomCinema() {
-        return nomCinema;
     }
 
-    public void setNomCinema(String nomCinema) {
-        this.nomCinema = nomCinema;
+    public String getHref() {
+        return href;
     }
 
-    public String getTitre() {
-        return titre;
+    public void setHref(String href) {
+        this.href = href;
     }
 
-    public void setTitre(String titre) {
-        this.titre = titre;
+    public Cinema getCinema() {
+        return cinema;
+    }
+
+    public void setCinema(Cinema cinema) {
+        this.cinema = cinema;
     }
 
 
@@ -92,5 +95,20 @@ public class Horaire {
 
     public void setHeure2(String heure) {
         this.heure2 = heure;
+
+    public Film getFilm() {
+        return film;
+    }
+
+    public void setFilm(Film film) {
+        this.film = film;
+    }
+
+    public DateTime getDateHeure() {
+        return dateHeure;
+    }
+
+    public void setDateHeure(DateTime dateHeure) {
+        this.dateHeure = dateHeure;
     }
 }

@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,10 +23,7 @@ import com.koushikdutta.ion.Ion;
 
 import org.joda.time.DateTime;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-
-import ca.qc.cstj.android.tp2_android.adapters.HoraireAdapter;
 import ca.qc.cstj.android.tp2_android.helpers.DateParser;
 import ca.qc.cstj.android.tp2_android.models.Film;
 import ca.qc.cstj.android.tp2_android.models.Cinema;
@@ -50,8 +46,13 @@ public class CinemaHoraireFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String href;
-    private ListView lstHoraire;
-    private HoraireAdapter horaireAdapter;
+    private TextView txtTitre;
+    private TextView txtDate;
+    private TextView txtHeure;
+
+
+    private Horaire horaire;
+    private Film film;
 
     private ProgressDialog progressDialog;
 
@@ -92,6 +93,9 @@ public class CinemaHoraireFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cinema_horaire, container, false);
 
+        txtTitre = (TextView) view.findViewById(R.id.txtTitre);
+        txtHeure = (TextView) view.findViewById(R.id.txtHeure);
+        txtDate = (TextView) view.findViewById(R.id.txtDate);
 
         return view;
     }
@@ -100,8 +104,6 @@ public class CinemaHoraireFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        lstHoraire = (ListView) getActivity().findViewById(R.id.list_horaires);
-
         progressDialog = ProgressDialog.show(getActivity(), "Horaires", "En chargement...", true, false);
         Ion.with(getActivity())
                 .load(href + "/horaires")
@@ -109,26 +111,45 @@ public class CinemaHoraireFragment extends Fragment {
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject jsonObject) {
-                        ArrayList<Horaire> listeHoraires = new ArrayList<Horaire>();
+
+                        DateParser dateParser = new DateParser();
                         JsonObject horaires;
-                        // On doit décomposer l'objet
-                        if (jsonObject.has("horaires")) {
+                        if(jsonObject.has("horaires")) {
                             horaires = jsonObject.getAsJsonObject("horaires");
                             if (horaires.has("items")) {
                                 JsonArray items = horaires.getAsJsonArray("items");
-                                // On veut juste en afficher 2, on compte le nombre de fois qu'on instancie un horaire pour un cinéma
 
-                                for (JsonElement item : items) {
+                                for (JsonElement horaire : items)
+                                {
+                                    JsonObject obj = horaire.getAsJsonObject();
+                                    String titre = obj.getAsJsonPrimitive("idFilm").toString();
 
-                                    listeHoraires.add(new Horaire(item.getAsJsonObject()));
+                                    String date = obj.getAsJsonPrimitive("dateHeure").toString();
+                                    DateTime dtDate = dateParser.ParseToDate(date);
+                                    String sDate = dateParser.ParseToDate(dtDate);
+                                    DateTime dtHeure = dateParser.ParseToTime(date);
+                                    String sHeure = dateParser.ParseToTime(dtHeure);
+                                    txtTitre.setText(titre);
+                                    txtDate.setText(sDate);
+                                    txtHeure.setText(sHeure);
                                 }
-
-                                horaireAdapter = new HoraireAdapter(getActivity(), getActivity().getLayoutInflater(),listeHoraires);
-                                lstHoraire.setAdapter(horaireAdapter);
-                                progressDialog.dismiss();
                             }
                         }
+
+                        /*if(horaires.has("items")) {
+                            horaires = jsonObject.getAsJsonObject("items");
+                        }*/
+                        // On doit décomposer l'object.
+
+
+                        txtTitre.setText(horaire.getFilm().getTitre());
+                        txtDate.setText(horaire.getDateHeure().toString("yyyy-MM-dd"));
+                        txtHeure.setText(horaire.getDateHeure().toString("hh:mm"));
+
+                        progressDialog.dismiss();
+
                     }
+
                 });
     }
 
