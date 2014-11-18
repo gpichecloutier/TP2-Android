@@ -11,6 +11,7 @@ import ca.qc.cstj.android.tp2_android.helpers.DateParser;
  */
 public class Horaire {
 
+<<<<<<< HEAD
     private String titre;
     private String date1;
     private String heure1;
@@ -23,6 +24,34 @@ public class Horaire {
 
     public Horaire(JsonObject jsonObject) {
         href = jsonObject.get("href").getAsString();
+=======
+    private String nomCinema;
+    private String titre;
+    private String date;
+    private String heure;
+
+    public Horaire(JsonObject jsonObject) {
+        /*href = jsonObject.get("href").getAsString();
+
+        if(jsonObject.has("cinema")) {
+            cinema = new Cinema(jsonObject.getAsJsonObject("cinema"));
+        }
+        if(jsonObject.has("film")) {
+            film = new Film(jsonObject.getAsJsonObject("film"));
+        }
+        if(jsonObject.has("dateHeure")) {
+            dateHeure = DateParser.ParseIso(jsonObject.getAsJsonPrimitive("dateHeure").getAsString());
+        }*/
+
+        DateParser dateParser = new DateParser();
+
+                    titre = jsonObject.getAsJsonPrimitive("film").getAsString();
+                    nomCinema = jsonObject.getAsJsonPrimitive("cinema").getAsString();
+                    DateTime dtDateHeure = DateParser.ParseIso(jsonObject.getAsJsonPrimitive("dateHeure").getAsString());
+                    date = dateParser.ParseToDate(dtDateHeure);
+                    heure = dateParser.ParseToTime(dtDateHeure);
+                }
+>>>>>>> parent of f64a793... fdsjklvndfjklsnvklsdfnvjksdflvnfsdjklnbgjnbgklnlk
 
         if(jsonObject.has("cinema")) {
             cinema = new Cinema(jsonObject.getAsJsonObject("cinema"));
@@ -61,6 +90,7 @@ public class Horaire {
         this.cinema = cinema;
     }
 
+<<<<<<< HEAD
     public String getDate1() {
         return date1;
     }
@@ -107,5 +137,21 @@ public class Horaire {
 
     public void setDateHeure(DateTime dateHeure) {
         this.dateHeure = dateHeure;
+=======
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getHeure() {
+        return heure;
+    }
+
+    public void setHeure(String heure) {
+        this.heure = heure;
+>>>>>>> parent of f64a793... fdsjklvndfjklsnvklsdfnvjksdflvnfsdjklnbgjnbgklnlk
     }
 }
