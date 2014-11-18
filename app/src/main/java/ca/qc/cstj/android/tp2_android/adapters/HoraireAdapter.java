@@ -73,8 +73,8 @@ public class HoraireAdapter extends BaseAdapter {
         String heure = dateParser.ParseToTime(result).toString();
 
         horaireViewHolder.txtTitre.setText(horaire.getTitre());
-        horaireViewHolder.txtHeure.setText(horaire.getDate1() + ", " + horaire.getHeure1());
-
+        horaireViewHolder.txtHoraire1.setText(horaire.getDate1() + ", " + horaire.getHeure1());
+        horaireViewHolder.txtHoraire2.setText(horaire.getDate2() + ", " + horaire.getHeure2());
         return convertView;
 
     }
