@@ -119,6 +119,7 @@ public class CinemaHoraireFragment extends Fragment {
                                 // On veut juste en afficher 2, on compte le nombre de fois qu'on instancie un horaire pour un cinéma
 
                                 for (JsonElement item : items) {
+
                                     listeHoraires.add(new Horaire(item.getAsJsonObject()));
                                 }
 

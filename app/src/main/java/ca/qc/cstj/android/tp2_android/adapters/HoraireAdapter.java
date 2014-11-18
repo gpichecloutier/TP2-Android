@@ -50,8 +50,8 @@ public class HoraireAdapter extends ArrayAdapter<Horaire> {
         Horaire horaire = getItem(position);
 
         horaireViewHolder.txtTitre.setText(horaire.getTitre());
-        horaireViewHolder.txtHoraire1.setText(horaire.getDate() + ", " + horaire.getHeure());
-        horaireViewHolder.txtHoraire2.setText(horaire.getDate() + ", " + horaire.getHeure());
+        horaireViewHolder.txtHoraire1.setText(horaire.getDate1() + ", " + horaire.getHeure1());
+        horaireViewHolder.txtHoraire2.setText(horaire.getDate2() + ", " + horaire.getHeure2());
 
 
         return convertView;

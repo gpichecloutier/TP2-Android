@@ -15,8 +15,10 @@ public class Horaire {
 
     private String nomCinema;
     private String titre;
-    private String date;
-    private String heure;
+    private String date1;
+    private String heure1;
+    private String date2;
+    private String heure2;
 
     public Horaire(JsonObject jsonObject) {
         /*href = jsonObject.get("href").getAsString();
@@ -36,8 +38,10 @@ public class Horaire {
                     titre = jsonObject.getAsJsonPrimitive("film").getAsString();
                     nomCinema = jsonObject.getAsJsonPrimitive("cinema").getAsString();
                     DateTime dtDateHeure = DateParser.ParseIso(jsonObject.getAsJsonPrimitive("dateHeure").getAsString());
-                    date = dateParser.ParseToDate(dtDateHeure);
-                    heure = dateParser.ParseToTime(dtDateHeure);
+                    date1 = dateParser.ParseToDate(dtDateHeure);
+                    heure1 = dateParser.ParseToTime(dtDateHeure);
+                    date2 = dateParser.ParseToDate(dtDateHeure);
+                    heure2 = dateParser.ParseToTime(dtDateHeure);
                 }
 
 
@@ -57,19 +61,36 @@ public class Horaire {
         this.titre = titre;
     }
 
-    public String getDate() {
-        return date;
+
+    public String getDate1() {
+        return date1;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDate1(String date) {
+        this.date1 = date;
     }
 
-    public String getHeure() {
-        return heure;
+    public String getHeure1() {
+        return heure1;
     }
 
-    public void setHeure(String heure) {
-        this.heure = heure;
+    public void setHeure1(String heure) {
+        this.heure1 = heure;
+    }
+
+    public String getDate2() {
+        return date2;
+    }
+
+    public void setDate2(String date) {
+        this.date2 = date;
+    }
+
+    public String getHeure2() {
+        return heure2;
+    }
+
+    public void setHeure2(String heure) {
+        this.heure2 = heure;
     }
 }
