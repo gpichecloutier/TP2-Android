@@ -36,16 +36,13 @@ public class Horaire {
 
         DateParser dateParser = new DateParser();
 
-                    titre = jsonObject.getAsJsonPrimitive("film").getAsString();
-                    nomCinema = jsonObject.getAsJsonPrimitive("cinema").getAsString();
-                    DateTime dtDateHeure = DateParser.ParseIso(jsonObject.getAsJsonPrimitive("dateHeure").getAsString());
-                    date1 = dateParser.ParseToDate(dtDateHeure);
-                    heure1 = dateParser.ParseToTime(dtDateHeure);
-                    date2 = dateParser.ParseToDate(dtDateHeure);
-                    heure2 = dateParser.ParseToTime(dtDateHeure);
-                }
-        }
 
+        titre = jsonObject.getAsJsonPrimitive("film").getAsString();
+        DateTime dtDateHeure = DateParser.ParseIso(jsonObject.getAsJsonPrimitive("dateHeure").getAsString());
+        date1 = dateParser.ParseToDate(dtDateHeure);
+        heure1 = dateParser.ParseToTime(dtDateHeure);
+        date2 = dateParser.ParseToDate(dtDateHeure);
+        heure2 = dateParser.ParseToTime(dtDateHeure);
     }
 
     public String getHref() {
@@ -63,7 +60,6 @@ public class Horaire {
     public void setCinema(Cinema cinema) {
         this.cinema = cinema;
     }
-
 
     public String getDate1() {
         return date1;
@@ -95,6 +91,7 @@ public class Horaire {
 
     public void setHeure2(String heure) {
         this.heure2 = heure;
+    }
 
     public Film getFilm() {
         return film;
